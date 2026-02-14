@@ -1,0 +1,1 @@
+export const API_BASE_URL = 'https://loveconnect-backend-kvb9.onrender.com';
