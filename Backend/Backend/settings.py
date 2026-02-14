@@ -152,27 +152,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5174", 
-    "http://localhost:5173", 
-    "https://loveconnect-gilt.vercel.app", 
-    "https://loveconnect.haaka.online",
-    "capacitor://localhost"
-]
+# ============================================================================
+# CORS & CSRF Settings - Allow all origins for demo project
+# ============================================================================
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5174", 
-    "http://localhost:5173", 
-    "https://loveconnect-gilt.vercel.app", 
-    "https://loveconnect.haaka.online",
-    "capacitor://localhost"
-]
-
-# Additional CORS settings to fix login issues
+# Allow all origins for CORS
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = False
 
-CORS_ALLOWED_HEADERS = [
+# Allow all headers
+CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
     'authorization',
@@ -182,8 +171,10 @@ CORS_ALLOWED_HEADERS = [
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
+    'access-control-allow-origin',
 ]
 
+# Allow all methods
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
@@ -192,3 +183,16 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+# Expose all headers
+CORS_EXPOSE_HEADERS = ['*']
+
+# Trust all origins for CSRF (demo only - use specific origins in production)
+CSRF_TRUSTED_ORIGINS = [
+    'https://*',
+    'http://*',
+    'capacitor://localhost'
+]
+
+# Additional security settings for demo
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
