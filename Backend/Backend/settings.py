@@ -76,7 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Backend.wsgi.application'
-
 ASGI_APPLICATION = 'Backend.asgi.application'
 
 
@@ -100,15 +99,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
-
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels.layers.InMemoryChannelLayer',
-#     }
-# }
-
-
 
 
 # Password validation
@@ -146,6 +136,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files (User uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Allowed file types for upload
+ALLOWED_UPLOAD_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']
+ALLOWED_UPLOAD_MIME_TYPES = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png', 
+    'image/gif',
+    'image/bmp',
+    'image/webp'
+]
+
+# Maximum file upload size (in bytes) - 5MB
+MAX_UPLOAD_SIZE = 5 * 1024 * 1024  # 5MB
+
+# File upload permissions
+FILE_UPLOAD_PERMISSIONS = 0o644
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
