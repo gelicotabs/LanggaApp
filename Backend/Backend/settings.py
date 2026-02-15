@@ -95,7 +95,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": ["rediss://default:AS00AAIjcDEyMTAzMzVjMmVmNDI0NDJiYTA5NTEwOTQ0YTI2YTVjNHAxMA@polished-coral-11572.upstash.io:6379"],
+            "hosts": ["rediss://default:AZNuAAIncDFlYTEyYTg1MDExMmE0YTg0YjMxODUxMzM5NTAyZWU4OHAxMzc3NDI@amazing-magpie-37742.upstash.io:6379"],
         },
     },
 }
