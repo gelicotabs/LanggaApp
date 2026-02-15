@@ -11,31 +11,23 @@ import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from api.routing import websocket_urlpatterns
-from channels.middleware import BaseMiddleware
 
+# Set Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Backend.settings')
 
+# Initialize Django ASGI application early to ensure the AppRegistry
+# is populated before importing code that may import ORM models.
+django_asgi_app = get_asgi_application()
 
-class SafeHeaderMiddleware(BaseMiddleware):
-    async def __call__(self, scope, receive, send):
-        # Sanitize headers before continuing
-        safe_headers = []
-        for header in scope.get("headers", []):
-            if (
-                isinstance(header, tuple) and
-                len(header) == 2 and
-                isinstance(header[0], bytes) and
-                isinstance(header[1], bytes)
-            ):
-                safe_headers.append(header)
-            else:
-                print(f"⚠️ Skipping bad header: {header}")
-        scope["headers"] = safe_headers
-        return await self.inner(scope, receive, send)
+# Now import the routing (after Django is initialized)
+from api.routing import websocket_urlpatterns
 
+# ASGI application with WebSocket support
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
+    # HTTP requests handled by Django
+    "http": django_asgi_app,
+    
+    # WebSocket connections
     "websocket": AuthMiddlewareStack(
         URLRouter(
             websocket_urlpatterns
